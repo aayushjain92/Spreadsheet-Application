@@ -1,10 +1,6 @@
-td,
-th {
+td,th {
     border: 1px solid rgb(190, 190, 190);
     padding: 10px;
-}
-
-td {
     text-align: center;
 }
 
@@ -18,16 +14,11 @@ th[scope="col"] {
 }
 
 th[scope="row"] {
-    background-color: #d7d9f2;
-}
-
-caption {
-    padding: 10px;
-    caption-side: bottom;
+    background-color: rgba(188, 224, 248, 0.788);
+    width: 20px;
 }
 
 table {
-    width: 200px;
     border-collapse: collapse;
     border: 2px solid rgb(200, 200, 200);
     letter-spacing: 1px;

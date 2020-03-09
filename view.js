@@ -76,16 +76,21 @@ class Spreadsheet {
         if(this.selectedRow !== null && spreadsheet_1.rows.length > 1 && columns_of_first_row.length >1){
             spreadsheet_1.deleteRow(this.selectedRow);
             this.setSelectedRowsColumnsAsNull();
+        }else{
+            alert("Please select a row first");
         }         
     }
 
     delColumn(){       
         let spreadsheet_1 = document.getElementById("spreadsheet_1");
         let columns_of_first_row = spreadsheet_1.rows[1].getElementsByTagName("td");
-        if(this.selectedColumn !== null && spreadsheet_1.rows.length > 1 && columns_of_first_row.length >1){
-                for(let i = 1; i < spreadsheet_1.rows.length; i++){
-                    spreadsheet_1.rows[i].deleteCell(this.selectedColumn);
-                }
+        if(this.selectedColumn !== null && columns_of_first_row.length >1){
+            spreadsheet_1.rows[0].deleteCell(this.selectedColumn);
+            for(let i = 1; i < spreadsheet_1.rows.length; i++){
+                spreadsheet_1.rows[i].deleteCell(this.selectedColumn);
+            }
+        }else{
+            alert("Please select a column first");
         }
         this.setSelectedRowsColumnsAsNull();       
     }
@@ -148,10 +153,10 @@ document.getElementById("spreadsheet_1").addEventListener("click", (event) => {
 
     // to select the column
     if(event.target.classList.contains('column-header-class')){
-        spreadsheet.selectedColumn = event.target.cellIndex -1;
+        spreadsheet.selectedColumn = event.target.cellIndex;
         for(let i = 1; i < spreadsheet_1.rows.length; i++){
             let ith_row = spreadsheet_1.rows[i];
-            let sel_col = ith_row.getElementsByTagName("td")[spreadsheet.selectedColumn];
+            let sel_col = ith_row.getElementsByTagName("td")[spreadsheet.selectedColumn-1];
             sel_col.classList.add("selected");
         }
 

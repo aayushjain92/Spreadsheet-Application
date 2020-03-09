@@ -26,7 +26,6 @@ class Spreadsheet {
         for(let i = 1; i <= 26; i++) {
             let row = document.createElement("tr");
             row.id = "row-" + i;
-            //row.className = "row-header-class";
             spreadsheet.appendChild(row);
 
             //create row headers
@@ -54,6 +53,9 @@ class Spreadsheet {
     }
 
     addColumn(){
+
+        //check if rows and columns are less than 25
+
         // The rows collection returns a collection of all <tr> elements in a table.
 
         // Note: The elements in the collection are sorted as they appear in the source code.
@@ -67,10 +69,12 @@ class Spreadsheet {
         // Tip: Use the deleteCell() method to delete a cell.
         
         // Tip: Use the cells collection to return a collection of all <td> or <th> elements in a table.
+
         setSelectedRowsColumnsAsNull();
     }
 
     addRow(){
+        //check if rows and columns are less than 25
         setSelectedRowsColumnsAsNull();
     }
 
@@ -97,6 +101,10 @@ class Spreadsheet {
             alert("Selection Invalid!");
         }
         this.setSelectedRowsColumnsAsNull();       
+    }
+
+    exportData(){
+
     }
 
     setSelectedRowsColumnsAsNull(){
@@ -141,7 +149,13 @@ let h = document.createTextNode("Delete Column");
 g.appendChild(h);
 document.body.insertBefore(g, document.getElementById("spreadsheet_1"));
 
-
+//Added Export Data button
+let c = document.createElement("button");
+c.classList.add("button");
+c.addEventListener('click', function() {spreadsheet.exportData();}); 
+let d = document.createTextNode("Export as CSV");
+c.appendChild(d);
+document.body.insertBefore(c, document.getElementById("spreadsheet_1"));
 
 document.getElementById("spreadsheet_1").addEventListener("click", (event) => {
 

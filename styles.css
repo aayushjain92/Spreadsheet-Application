@@ -40,5 +40,16 @@ table {
 }
 
 tr.selected, td.selected {
-    background-color: rgba(173, 247, 170, 0.788);
+    background-color: rgba(253, 216, 216, 0.788);
 }
+
+.button {
+    background-color: #4CAF50;
+    border: 5px solid white;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }

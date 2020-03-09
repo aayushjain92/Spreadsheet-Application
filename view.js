@@ -63,33 +63,81 @@ class Spreadsheet {
         // Tip: Use the deleteCell() method to delete a cell.
         
         // Tip: Use the cells collection to return a collection of all <td> or <th> elements in a table.
+        setSelectedRowsColumnsAsNull();
     }
 
     addRow(){
-
+        setSelectedRowsColumnsAsNull();
     }
 
-    delRow(rowNumber){
+    delRow(){
         let spreadsheet = document.getElementById("spreadsheet_1");
-        if(spreadsheet.rows.length > 1)
-        spreadsheet.deleteRow(rowNumber); 
+        if(this.selectedRow !== null && spreadsheet.rows.length > 1){
+            spreadsheet.deleteRow(this.selectedRow);
+            setSelectedRowsColumnsAsNull();
+        }         
     }
 
-    delColumn(colNumber){
-        let spreadsheet = document.getElementById("spreadsheet_1");
-        if(spreadsheet.rows.length > 1 )
-        spreadsheet.deleteRow(rowNumber); 
-
-        // get the number of rows
-        //find the number of columns
-        // loop 
+    delColumn(){
+        if(this.selectedColumn !== null){
+            let spreadsheet_rows = document.getElementById("spreadsheet_1").rows;
+            let columns_of_first_row = spreadsheet_rows[1].getElementsByTagName("td");
+            if(spreadsheet_rows.length > 1 && columns_of_first_row.length >1){
+                for(let i = 1; i < spreadsheet_rows.length; i++){
+                    spreadsheet_rows[i].deleteCell(this.selectedColumn);
+                }
+            }
+            setSelectedRowsColumnsAsNull();
+        }
+        
     }
+
+    setSelectedRowsColumnsAsNull(){
+        this.selectedColumn = null;
+        this.selectedRow = null;
+    }
+
 }
 
 let spreadsheet = new Spreadsheet();
 
+//Added Add Row button
+let x = document.createElement("button");
+x.classList.add("button");
+x.onclick = spreadsheet.addRow;
+let y = document.createTextNode("Add Row");
+x.appendChild(y);
+document.body.insertBefore(x, document.getElementById("spreadsheet_1"));
+
+//Added Delete Row button
+let p = document.createElement("button");
+p.classList.add("button");
+p.onclick = spreadsheet.delRow;
+let q = document.createTextNode("Delete Row");
+p.appendChild(q);
+document.body.insertBefore(p, document.getElementById("spreadsheet_1"));
+
+//Added Add Column button
+let m = document.createElement("button");
+m.classList.add("button");
+m.onclick = spreadsheet.addColumn;
+let n = document.createTextNode("Add Column");
+m.appendChild(n);
+document.body.insertBefore(m, document.getElementById("spreadsheet_1"));
+
+//Added Delete Column button
+let g = document.createElement("button");
+g.classList.add("button");
+g.onclick = spreadsheet.delColumn;
+let h = document.createTextNode("Delete Column");
+g.appendChild(h);
+document.body.insertBefore(g, document.getElementById("spreadsheet_1"));
+
+
 
 document.getElementById("spreadsheet_1").addEventListener("click", (event) => {
+
+    // to remove the selection
     let spreadsheet_1 = document.getElementById("spreadsheet_1");
     let elems = spreadsheet_1.querySelectorAll(".selected");
     for(let i = 0; i < elems.length; i++){
@@ -97,18 +145,20 @@ document.getElementById("spreadsheet_1").addEventListener("click", (event) => {
             elems[i].classList.remove("selected");
         }
     }
-    
+    spreadsheet.setSelectedRowsColumnsAsNull();
 
+    // to select the column
     if(event.target.classList.contains('column-header-class')){
-        spreadsheet_1.selectedColumn = event.target.cellIndex -1;
+        spreadsheet.selectedColumn = event.target.cellIndex -1;
         for(let i = 1; i < spreadsheet_1.rows.length; i++){
             let ith_row = spreadsheet_1.rows[i];
             let sel_col = ith_row.getElementsByTagName("td")[spreadsheet_1.selectedColumn];
             sel_col.classList.add("selected");
         }
 
+    // to select the row
     } else if(event.target.classList.contains('row-header-class')){
-        spreadsheet_1.selectedRow = event.target.parentNode.rowIndex;
+        spreadsheet.selectedRow = event.target.parentNode.rowIndex;
         document.getElementById(event.target.parentNode.id).classList.add("selected");
     }
 

@@ -77,11 +77,11 @@ class Spreadsheet {
     delRow(){
         let spreadsheet_1 = document.getElementById("spreadsheet_1");
         let columns_of_first_row = spreadsheet_1.rows[1].getElementsByTagName("td");
-        if(this.selectedRow !== null && spreadsheet_1.rows.length > 1 && columns_of_first_row.length >1){
+        if(this.selectedRow !== null && spreadsheet_1.rows.length > 2 && columns_of_first_row.length >1){
             spreadsheet_1.deleteRow(this.selectedRow);
             this.setSelectedRowsColumnsAsNull();
         }else{
-            alert("Please select a row first");
+            alert("Selection Invalid!");
         }         
     }
 
@@ -94,7 +94,7 @@ class Spreadsheet {
                 spreadsheet_1.rows[i].deleteCell(this.selectedColumn);
             }
         }else{
-            alert("Please select a column first");
+            alert("Selection Invalid!");
         }
         this.setSelectedRowsColumnsAsNull();       
     }

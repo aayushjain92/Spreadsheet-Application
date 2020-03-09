@@ -2,10 +2,15 @@ td,th {
     border: 1px solid rgb(190, 190, 190);
     padding: 10px;
     text-align: center;
+    width: 200px;
 }
 
-tr:nth-child(even) {
-    background-color: #eee;
+td {
+    cursor: cell;
+}
+
+th {
+    cursor: pointer;
 }
 
 th[scope="col"] {
@@ -13,9 +18,17 @@ th[scope="col"] {
     color: #fff;
 }
 
+th.sticky {
+position: sticky;
+}
+
 th[scope="row"] {
     background-color: rgba(188, 224, 248, 0.788);
     width: 20px;
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
 }
 
 table {
@@ -24,4 +37,8 @@ table {
     letter-spacing: 1px;
     font-family: sans-serif;
     font-size: .8rem;
+}
+
+tr.selected, td.selected {
+    background-color: rgba(173, 247, 170, 0.788);
 }

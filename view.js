@@ -71,25 +71,23 @@ class Spreadsheet {
     }
 
     delRow(){
-        let spreadsheet = document.getElementById("spreadsheet_1");
-        if(this.selectedRow !== null && spreadsheet.rows.length > 1){
-            spreadsheet.deleteRow(this.selectedRow);
-            setSelectedRowsColumnsAsNull();
+        let spreadsheet_1 = document.getElementById("spreadsheet_1");
+        let columns_of_first_row = spreadsheet_1.rows[1].getElementsByTagName("td");
+        if(this.selectedRow !== null && spreadsheet_1.rows.length > 1 && columns_of_first_row.length >1){
+            spreadsheet_1.deleteRow(this.selectedRow);
+            this.setSelectedRowsColumnsAsNull();
         }         
     }
 
-    delColumn(){
-        if(this.selectedColumn !== null){
-            let spreadsheet_rows = document.getElementById("spreadsheet_1").rows;
-            let columns_of_first_row = spreadsheet_rows[1].getElementsByTagName("td");
-            if(spreadsheet_rows.length > 1 && columns_of_first_row.length >1){
-                for(let i = 1; i < spreadsheet_rows.length; i++){
-                    spreadsheet_rows[i].deleteCell(this.selectedColumn);
+    delColumn(){       
+        let spreadsheet_1 = document.getElementById("spreadsheet_1");
+        let columns_of_first_row = spreadsheet_1.rows[1].getElementsByTagName("td");
+        if(this.selectedColumn !== null && spreadsheet_1.rows.length > 1 && columns_of_first_row.length >1){
+                for(let i = 1; i < spreadsheet_1.rows.length; i++){
+                    spreadsheet_1.rows[i].deleteCell(this.selectedColumn);
                 }
-            }
-            setSelectedRowsColumnsAsNull();
         }
-        
+        this.setSelectedRowsColumnsAsNull();       
     }
 
     setSelectedRowsColumnsAsNull(){
@@ -112,7 +110,8 @@ document.body.insertBefore(x, document.getElementById("spreadsheet_1"));
 //Added Delete Row button
 let p = document.createElement("button");
 p.classList.add("button");
-p.onclick = spreadsheet.delRow;
+//p.onclick = spreadsheet.delRow;
+p.addEventListener('click', function() {spreadsheet.delRow();}); 
 let q = document.createTextNode("Delete Row");
 p.appendChild(q);
 document.body.insertBefore(p, document.getElementById("spreadsheet_1"));
@@ -128,7 +127,7 @@ document.body.insertBefore(m, document.getElementById("spreadsheet_1"));
 //Added Delete Column button
 let g = document.createElement("button");
 g.classList.add("button");
-g.onclick = spreadsheet.delColumn;
+g.addEventListener('click', function() {spreadsheet.delColumn();}); 
 let h = document.createTextNode("Delete Column");
 g.appendChild(h);
 document.body.insertBefore(g, document.getElementById("spreadsheet_1"));
@@ -152,7 +151,7 @@ document.getElementById("spreadsheet_1").addEventListener("click", (event) => {
         spreadsheet.selectedColumn = event.target.cellIndex -1;
         for(let i = 1; i < spreadsheet_1.rows.length; i++){
             let ith_row = spreadsheet_1.rows[i];
-            let sel_col = ith_row.getElementsByTagName("td")[spreadsheet_1.selectedColumn];
+            let sel_col = ith_row.getElementsByTagName("td")[spreadsheet.selectedColumn];
             sel_col.classList.add("selected");
         }
 

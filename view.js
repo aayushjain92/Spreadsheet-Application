@@ -42,6 +42,10 @@ class Spreadsheet {
                 let chr = String.fromCharCode(65 + j);
                 let cell = document.createElement("td");
                 cell.id = "cell_" + i + chr;
+                let ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', '');
+                cell.appendChild(ele);
                 row.appendChild(cell);
             }
         }

@@ -40,8 +40,9 @@ class Spreadsheet {
             for(let j = 0; j < 26; j++) {
                 let chr = String.fromCharCode(65 + j);
                 let cell = document.createElement("td");
-                cell.id = "cell_" + i + chr;
+                cell.id = chr + i;
                 let ele = document.createElement('input');
+                ele.id="inp-"+chr + i;
                 ele.setAttribute('type', 'text');
                 ele.setAttribute('value', '');
                 cell.appendChild(ele);
@@ -191,6 +192,14 @@ g.addEventListener('click', function() {spreadsheet.delColumn();});
 let h = document.createTextNode("Delete Column");
 g.appendChild(h);
 document.body.insertBefore(g, document.getElementById("spreadsheet_1"));
+
+//Added Import Data button
+let e = document.createElement("button");
+e.classList.add("button");
+e.addEventListener('click', function() {spreadsheet.importCSV("assignment6_data.csv");}); 
+let f = document.createTextNode("Import CSV");
+e.appendChild(f);
+document.body.insertBefore(e, document.getElementById("spreadsheet_1"));
 
 //Added Export Data button
 let c = document.createElement("button");

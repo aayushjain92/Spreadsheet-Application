@@ -1,0 +1,30 @@
+{
+  "name": "assignment-6-aayushjain92",
+  "version": "1.0.0",
+  "description": "**Problem Statement**",
+  "main": "index.js",
+  "dependencies": {
+    "rxjs": "^6.5.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3",
+    "webpack-cli": "^3.3.11",
+    "webpack": "^4.42.0",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neu-mis-info6150-spring-2020/assignment-6-aayushjain92.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neu-mis-info6150-spring-2020/assignment-6-aayushjain92/issues"
+  },
+  "homepage": "https://github.com/neu-mis-info6150-spring-2020/assignment-6-aayushjain92#readme"
+}

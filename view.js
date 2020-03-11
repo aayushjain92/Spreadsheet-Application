@@ -103,8 +103,51 @@ class Spreadsheet {
         this.setSelectedRowsColumnsAsNull();       
     }
 
-    exportData(){
+    exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td");
+            
+            for (var j = 0; j < cols.length; j++){
+                //var inputVal = document.getElementById("myInput").value;
+                var inputVal = cols[j].querySelector("input").value;
+                row.push(inputVal);
+            } 
+                
+            
+            csv.push(row.join(","));        
+        }
+    
+        // Download CSV file
+        this.downloadCSV(csv.join("\n"), filename);
+    }
 
+    downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+    
+        // CSV file
+        csvFile = new Blob([csv], {type: "text/csv"});
+    
+        // Download link
+        downloadLink = document.createElement("a");
+    
+        // File name
+        downloadLink.download = filename;
+    
+        // Create a link to the file
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+    
+        // Hide download link
+        downloadLink.style.display = "none";
+    
+        // Add the link to DOM
+        document.body.appendChild(downloadLink);
+    
+        // Click download link
+        downloadLink.click();
     }
 
     setSelectedRowsColumnsAsNull(){
@@ -152,7 +195,7 @@ document.body.insertBefore(g, document.getElementById("spreadsheet_1"));
 //Added Export Data button
 let c = document.createElement("button");
 c.classList.add("button");
-c.addEventListener('click', function() {spreadsheet.exportData();}); 
+c.addEventListener('click', function() {spreadsheet.exportTableToCSV("assignment6_data.csv");}); 
 let d = document.createTextNode("Export as CSV");
 c.appendChild(d);
 document.body.insertBefore(c, document.getElementById("spreadsheet_1"));

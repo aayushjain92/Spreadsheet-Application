@@ -53,7 +53,9 @@ let source = Rx.Observable.fromEvent(input, 'keyup')
 
                         //console.log(`${i} and ${j}`);
                         let val = document.getElementById("inp-"+chr+j).value;
-                        let value = (isNaN(val)) ? 0 : parseInt(val);
+                        let value = 0;
+                        if(/^\+?(0|[1-9]\d*)$/.test(val))
+                            value = parseInt(val);                      
                         sum += value;
                         
                     }

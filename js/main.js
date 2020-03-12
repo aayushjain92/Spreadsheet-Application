@@ -4,72 +4,120 @@ let input = document.getElementById('spreadsheet_1');
 
 let source = Rx.Observable.fromEvent(input, 'keyup')
     .map((e) => e)
-    .filter(e => e.target.value.endsWith(')') && (e.target.value.startsWith('=SUM(') || e.target.value.startsWith('=sum(') ) ).
-    subscribe(e => {
-        try {
-        //extracting formula data and metadata
-        let formula = e.target.value;                                                 // '=SUM(B1:D9)'
-        let result_cell = e.target.parentNode.id;                                    //'B10'
-        let result_cell_col = result_cell.substring(0, 1);                         //'B'
-        let result_cell_row = parseInt(result_cell.substring(1, result_cell.length));       //10
+    .filter(e => e.target.value.endsWith(')') && (e.target.value.startsWith('=SUM(') || e.target.value.startsWith('=sum(')))
+    .subscribe(e => {
+        if (e.code == "Enter") {
 
-        //extracting column metadata mentioned in the formula by the user
-        let start_cell = formula.split('(').pop().split(':')[0];    //B1
-        let end_cell = formula.split(':').pop().split(')')[0];      //D9
-        let start_col = start_cell.substring(0, 1);                 //B
-        let start_row = parseInt(start_cell.substring(1, start_cell.length)); //1
-        let end_col = end_cell.substring(0, 1);                     //D
-        let end_row =  parseInt(end_cell.substring(1, end_cell.length));      //9
-        
-        // extracting spreadsheet details
-        let no_of_rows = input.rows.length - 1;
-        let no_of_cols = input.rows[1].querySelectorAll("td").length;
+            try {
+                //extracting formula data and metadata
+                let formula = e.target.value;                                                 // '=SUM(B1:D9)'
+                let result_cell = e.target.parentNode.id;                                    //'B10'
+                let result_cell_col = result_cell.substring(0, 1);                         //'B'
+                let result_cell_row = parseInt(result_cell.substring(1, result_cell.length));       //10
 
-        // to check if the formula cell is not a part of the formula
-        let flag = true;
-                
-       
-            if(result_cell_col >= start_col && result_cell_col <= end_col){
-                if(result_cell_row >= start_row && result_cell_row <= end_row){
-                    flag = false;
-                }
-            }
+                //extracting column metadata mentioned in the formula by the user
+                let start_cell = formula.split('(').pop().split(':')[0];    //B1
+                let end_cell = formula.split(':').pop().split(')')[0];      //D9
+                let start_col = start_cell.substring(0, 1);                 //B
+                let start_row = parseInt(start_cell.substring(1, start_cell.length)); //1
+                let end_col = end_cell.substring(0, 1);                     //D
+                let end_row = parseInt(end_cell.substring(1, end_cell.length));      //9
 
-            //check if the cells entered in the formula are valid cells in the spreadsheet
-            if( start_col >= 'A' && start_col <= String.fromCharCode(64 + no_of_cols) 
-            && end_col >= 'A' && end_col <= String.fromCharCode(64 + no_of_cols)
-            && start_row >= 1 && start_row <= no_of_rows
-            && end_row >= 1 && end_row <= no_of_rows
-            && flag){
+                // extracting spreadsheet details
+                let no_of_rows = input.rows.length - 1;
+                let no_of_cols = input.rows[1].querySelectorAll("td").length;
 
-                // console.log(`${start_col} ${start_row} ${end_col} ${end_row}`);
-                // console.log(`${no_of_rows} ${no_of_cols}`);
-                // console.log("---------");
-                formulaMap.set(result_cell, formula);
-                let sum = 0;
-                for(let i = start_col.charCodeAt(0); i <= end_col.charCodeAt(0); i++){
-                    let chr = String.fromCharCode(i);
-                    for(let j = start_row; j<= end_row; j++){
+                // to check if the formula cell is not a part of the formula
+                let flag = true;
 
-                        //console.log(`${i} and ${j}`);
-                        let val = document.getElementById("inp-"+chr+j).value;
-                        let value = 0;
-                        if(/^\+?(0|[1-9]\d*)$/.test(val))
-                            value = parseInt(val);                      
-                        sum += value;
-                        
+
+                if (result_cell_col >= start_col && result_cell_col <= end_col) {
+                    if (result_cell_row >= start_row && result_cell_row <= end_row) {
+                        flag = false;
                     }
                 }
-                e.target.value = sum;
 
-            }else{
+                //check if the cells entered in the formula are valid cells in the spreadsheet
+                if (start_col >= 'A' && start_col <= String.fromCharCode(64 + no_of_cols)
+                    && end_col >= 'A' && end_col <= String.fromCharCode(64 + no_of_cols)
+                    && start_row >= 1 && start_row <= no_of_rows
+                    && end_row >= 1 && end_row <= no_of_rows
+                    && flag) {
 
+                    // console.log(`${start_col} ${start_row} ${end_col} ${end_row}`);
+                    // console.log(`${no_of_rows} ${no_of_cols}`);
+                    // console.log("---------");
+                    formulaMap.set(result_cell, formula);
+                    let sum = 0;
+                    for (let i = start_col.charCodeAt(0); i <= end_col.charCodeAt(0); i++) {
+                        let chr = String.fromCharCode(i);
+                        for (let j = start_row; j <= end_row; j++) {
+
+                            //console.log(`${i} and ${j}`);
+                            let val = document.getElementById("inp-" + chr + j).value;
+                            let value = 0;
+                            if (/^\+?(0|[1-9]\d*)$/.test(val))
+                                value = parseInt(val);
+                            sum += value;
+
+                        }
+                    }
+                    e.target.value = sum;
+
+                } else {
+
+                    e.target.value = "INVALID!";
+
+                }
+            }
+            catch (err) {
                 e.target.value = "INVALID!";
+            }
+        }
+    })
+
+// var code = Rx.Observable.from([
+//     "Enter"
+// ]);
+let temp = Rx.Observable.fromEvent(input, 'keyup')
+    .map((e) => e)
+    .filter(e => e.target.value.startsWith('='))
+    //.filter(e => e.target.value.startsWith('/^=\D\d+/i') ) 
+    .subscribe(e => {
+
+        if (e.code == "Enter") {
+            let s_orig = e.target.value;
+            let s = s_orig.substring(1, s_orig.length);
+            let parts = s.split(/[^A-Za-z0-9]/);
+
+            for (i = 0; i < parts.length; i++) {
+                let val = 0, value = 0;
+                let node = document.getElementById("inp-" + parts[i]);
+                if (node !== null) {
+                    val = node.value;
+                }
+                if (/^\+?(0|[1-9]\d*)$/.test(val)) {
+                    value = parseInt(val);
+                }
+                value = value.toString();
+                s = s.replace(parts[i], value);
 
             }
-          }
-          catch(err) {
-            e.target.value = "INVALID!";
-          }
-        
+            console.log(s);
+            let total = math.evaluate(s);
+            // let total = 0;
+            // s = s.match(/[+\-]*(\.\d+|\d+(\.\d+)?)/g) || [];
+            // while (s.length) {
+            //     let val = document.getElementById(s.shift());
+            //     let value = 0;
+            //     if (/^\+?(0|[1-9]\d*)$/.test(val))
+            //         value = parseFloat(val);
+            //     total += parseFloat(s.shift());
+            // }
+            console.log(total);
+            if (!isNaN(total))
+                e.target.value = total;
+        }
+
+
     })

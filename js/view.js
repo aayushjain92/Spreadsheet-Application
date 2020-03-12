@@ -101,10 +101,6 @@ class Spreadsheet {
     }
 
     addRow(){
-<<<<<<< HEAD
-        //check if rows and columns are less than 25
-        setSelectedRowsColumnsAsNull();
-=======
         //console.log(this.selectedRow);
         //check if rows and columns are less than 25
         let input = document.getElementById('spreadsheet_1');
@@ -157,7 +153,6 @@ class Spreadsheet {
         }
 
         this.setSelectedRowsColumnsAsNull();
->>>>>>> 2c71540... Fixed Bugs
     }
 
 

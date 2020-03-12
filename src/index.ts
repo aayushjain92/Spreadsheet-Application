@@ -1,5 +1,5 @@
 // import { fromEvent } from 'rxjs';
-// fromEvent(document, 'keyup').map((e) => e.target.value).subscribe(showResults);
+// fromEvent(document, 'keyup').map((e) => e).subscribe(showResults);
 
 
 

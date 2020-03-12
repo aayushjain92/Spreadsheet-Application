@@ -56,20 +56,36 @@ class Spreadsheet {
     addColumn(){
 
         //check if rows and columns are less than 25
-
-        // The rows collection returns a collection of all <tr> elements in a table.
-
-        // Note: The elements in the collection are sorted as they appear in the source code.
-        
-        // Tip: Use the insertRow() method to create a new row (<tr>).
-        
-        // Tip: Use the deleteRow() method to remove a row.
-        
-        // Tip: Use the insertCell() method to create a new cell (<td>).
-        
-        // Tip: Use the deleteCell() method to delete a cell.
-        
-        // Tip: Use the cells collection to return a collection of all <td> or <th> elements in a table.
+        let input = document.getElementById('spreadsheet_1');
+        let no_of_rows = input.rows.length - 1;
+        let no_of_cols = input.rows[1].querySelectorAll("td").length;
+        if(no_of_cols <= 25){
+            
+            //create column header for the new column
+            let column_header = document.createElement("th");
+            let chr = String.fromCharCode(64 + no_of_cols + 1);
+            column_header.id = "column-" + chr;
+            column_header.setAttribute("scope", "col");
+            column_header.className = "column-header-class";
+            column_header.innerText = chr;
+            input.rows[0].appendChild(column_header);
+            
+            // create one more column for every row
+            for(let i = 1; i < no_of_rows; i++) {                  
+                    let cell = document.createElement("td");
+                    cell.id = chr + i;
+                    let ele = document.createElement('input');
+                    ele.id="inp-"+chr + i;
+                    ele.setAttribute('type', 'text');
+                    ele.setAttribute('value', '');
+                    cell.appendChild(ele);
+                    row.appendChild(cell);
+                
+            }
+        }else{
+            alert("Cannot add more than 26 Columns");
+            return;
+        }
 
         setSelectedRowsColumnsAsNull();
     }
@@ -77,6 +93,10 @@ class Spreadsheet {
     addRow(){
         //check if rows and columns are less than 25
         setSelectedRowsColumnsAsNull();
+    }
+
+    moveDataOnDeletion(){
+        
     }
 
     delRow(){

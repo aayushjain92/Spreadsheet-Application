@@ -44,7 +44,7 @@ tr.selected, td.selected {
 }
 
 .button {
-    background-color: #4CAF50;
+    background-color: rgba(19, 33, 54, 0.781);
     border: 5px solid white;
     color: white;
     padding: 15px 32px;
@@ -53,3 +53,12 @@ tr.selected, td.selected {
     display: inline-block;
     font-size: 16px;
   }
+
+  .inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}

@@ -9,8 +9,10 @@ Javascript, CSS, RxJS
 Steps to run:
 
              1. git clone the repository
+             
+             2. execute npm install to install dependencies
 
-             2. Open the terminal and execute "npm run start"   
+             3. Open the terminal and execute "npm run start"   
 
-             3. Open the localhost link displayed in the browser
+             4. Open the localhost link generated in terminal on your browser
 
